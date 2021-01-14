@@ -13,36 +13,52 @@
               <v-expansion-panel-header>{{
                 project.name
               }}</v-expansion-panel-header>
+
               <v-expansion-panel-content>
-                <v-layout row wrap class="pa-3">
-                  <v-flex xs6 sm4 md6>
+                <v-layout row wrap>
+                  <v-flex xs6 sm4 md6 class="pa-2">
                     <div class="caption grey--text">Data de início</div>
                     <div>{{ project.start_date }}</div>
                   </v-flex>
 
-                  <v-flex xs6 sm4 md6>
+                  <v-flex xs6 sm4 md6 class="pa-2">
                     <div class="caption grey--text">Data de término</div>
                     <div>{{ project.end_date }}</div>
                   </v-flex>
 
-                  <v-flex xs12 md6>
+                  <v-flex xs12 md6 class="pa-2">
                     <div class="caption grey--text">Valor do projeto</div>
                     <div>{{ project.value }}</div>
                   </v-flex>
-                  <v-flex xs12 md6>
+                  <v-flex xs12 md6 class="pa-2">
                     <div class="caption grey--text">Risco</div>
                     <div>{{ riskLabel(project.risk) }}</div>
                   </v-flex>
 
-                  <v-flex xs12 md6>
+                  <v-flex xs12 md6 class="pa-2">
                     <div class="caption grey--text">Participantes</div>
                     <div
                       v-for="person in parsedParticipants(project.participants)"
                       :key="person.name"
                     >
-                      {{ person.name }}
+                      <v-icon left> mdi-account-circle </v-icon>
+                      <span>
+                        {{ person.name }}
+                      </span>
                     </div>
                   </v-flex>
+                </v-layout>
+                <v-layout
+                  row
+                  wrap
+                  class="pa-4"
+                  justify-center
+                  justify-sm-end
+                  align-center
+                >
+                  <ButtonSimulateInvestment :onClick="() => {}" class="mr-2" />
+                  <ButtonEdit :onClick="() => {}" class="mr-2" />
+                  <ButtonDelete :onClick="() => {}" />
                 </v-layout>
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -58,14 +74,26 @@ import PageWrapper from '@/components/page/PageWrapper.vue';
 import PageHeader from '@/components/page/PageHeader.vue';
 import PageContent from '@/components/page/PageContent.vue';
 import EmptyListMessage from '@/components/EmptyListMessage.vue';
+import ButtonEdit from '@/components/buttons/ButtonEdit.vue';
+import ButtonSimulateInvestment from '@/components/buttons/ButtonSimulateInvestment.vue';
+import ButtonDelete from '@/components/buttons/ButtonDelete.vue';
+
 export default {
   name: 'Projects',
-  components: { PageWrapper, PageHeader, PageContent, EmptyListMessage },
+  components: {
+    PageWrapper,
+    PageHeader,
+    PageContent,
+    EmptyListMessage,
+    ButtonSimulateInvestment,
+    ButtonEdit,
+    ButtonDelete
+  },
   data() {
     return {
       projects: [
         {
-          id: 'ashasdlk',
+          id: 'asdads',
           name: 'Foo',
           start_date: '12/01/2021',
           end_date: '13/01/2021',
@@ -75,7 +103,17 @@ export default {
           value: 25000.5
         },
         {
-          id: 'asadsads',
+          id: 'asdads12',
+          name: 'Foo',
+          start_date: '12/01/2021',
+          end_date: '13/01/2021',
+          participants:
+            '[{"name":"Heloisa"}, {"name":"Clarisse"}, {"name":"Maria Eduarda"}]',
+          risk: 0,
+          value: 25000.5
+        },
+        {
+          id: 'asdads13',
           name: 'Foo',
           start_date: '12/01/2021',
           end_date: '13/01/2021',
