@@ -1,17 +1,15 @@
 <template>
   <header class="d-flex flex-row justify-space-between">
     <h1 class="black-lighten-1--text text-h5">
-      <slot></slot>
+      <slot name="title"></slot>
     </h1>
-    <ButtonAddProject />
+    <slot name="button"> </slot>
   </header>
 </template>
 
 <script>
-import ButtonAddProject from '@/components/buttons/ButtonAddProject.vue';
-
 export default {
-  components: { ButtonAddProject }
+  components: {}
 };
 </script>
 

@@ -1,6 +1,11 @@
 <template>
   <PageWrapper>
-    <PageHeader> Projetos </PageHeader>
+    <PageHeader>
+      <template v-slot:title> Projetos </template>
+      <template v-slot:button>
+        <ButtonAddProject />
+      </template>
+    </PageHeader>
     <PageContent>
       <template v-if="projects.length === 0">
         <EmptyListMessage />
@@ -74,6 +79,7 @@ import PageWrapper from '@/components/page/PageWrapper.vue';
 import PageHeader from '@/components/page/PageHeader.vue';
 import PageContent from '@/components/page/PageContent.vue';
 import EmptyListMessage from '@/components/EmptyListMessage.vue';
+import ButtonAddProject from '@/components/buttons/ButtonAddProject.vue';
 import ButtonEdit from '@/components/buttons/ButtonEdit.vue';
 import ButtonSimulateInvestment from '@/components/buttons/ButtonSimulateInvestment.vue';
 import ButtonDelete from '@/components/buttons/ButtonDelete.vue';
@@ -85,6 +91,7 @@ export default {
     PageHeader,
     PageContent,
     EmptyListMessage,
+    ButtonAddProject,
     ButtonSimulateInvestment,
     ButtonEdit,
     ButtonDelete
