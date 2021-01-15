@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-4" flat>
+  <v-card class="mt-4 mx-auto" flat>
     <slot> </slot>
   </v-card>
 </template>
