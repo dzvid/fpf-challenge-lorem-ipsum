@@ -6,6 +6,10 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: '/',
+    redirect: { name: 'projects' }
+  },
+  {
     path: '/projects',
     name: 'projects',
     component: Projects
@@ -17,6 +21,10 @@ const routes = [
       import(
         /* webpackChunkName: "create project" */ '../views/CreateProject.vue'
       )
+  },
+  {
+    path: '*',
+    redirect: { name: 'projects' }
   }
 ];
 
