@@ -47,6 +47,7 @@
             <v-col cols="12" sm="4">
               <v-text-field
                 v-model="project.value"
+                type="number"
                 :rules="[rules.value.required]"
                 label="Valor do projeto"
                 prepend-icon="mdi-cash-usd"

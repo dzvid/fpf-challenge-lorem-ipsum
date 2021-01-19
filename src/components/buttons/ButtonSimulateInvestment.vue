@@ -14,6 +14,7 @@
         <v-form ref="form">
           <v-text-field
             v-model="investiment"
+            type="number"
             :rules="[
               rules.value.required,
               rules.value.validateInvestmentValue(project.value)
