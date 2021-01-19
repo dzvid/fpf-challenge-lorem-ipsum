@@ -4,6 +4,7 @@ const rules = {
   name: { required },
   end_date: { required },
   start_date: { required },
+  value: { required },
   participants: {
     atLeastOne: array =>
       (!!array && array.length > 0) ||

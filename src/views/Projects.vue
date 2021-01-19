@@ -28,7 +28,9 @@
 
                   <v-flex xs6 sm4 md6 class="pa-2">
                     <div class="caption grey--text">Data de término</div>
-                    <div>{{ project.end_date }}</div>
+                    <div>
+                      {{ project.end_date }}
+                    </div>
                   </v-flex>
 
                   <v-flex xs12 md6 class="pa-2">
