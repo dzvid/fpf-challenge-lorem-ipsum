@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="290">
+  <v-dialog v-model="visible" persistent max-width="600">
     <template v-slot:activator="{ on, attrs }">
       <v-btn x-small fab color="error" v-bind="attrs" v-on="on">
         <v-icon>mdi-delete</v-icon>
@@ -11,7 +11,7 @@
       </v-card-title>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="dialog = false"> Cancelar </v-btn>
+        <v-btn color="primary" text @click="visible = false"> Cancelar </v-btn>
         <v-btn color="primary" text @click="handleDelete"> Excluir </v-btn>
       </v-card-actions>
     </v-card>
@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      dialog: false
+      visible: false
     };
   },
   methods: {

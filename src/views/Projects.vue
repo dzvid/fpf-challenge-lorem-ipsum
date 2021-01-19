@@ -63,7 +63,9 @@
                   justify-sm-end
                   align-center
                 >
-                  <ButtonSimulateInvestment :onClick="() => {}" class="mr-2" />
+                  <div class="mr-2">
+                    <ButtonSimulateInvestment :projectId="project.id" />
+                  </div>
                   <ButtonEdit
                     :onClick="() => navigateToEditProject(project.id)"
                     class="mr-2"
