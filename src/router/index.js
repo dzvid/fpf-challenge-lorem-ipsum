@@ -19,8 +19,15 @@ const routes = [
     name: 'projects.post',
     component: () =>
       import(
-        /* webpackChunkName: "create project" */ '../views/CreateProject.vue'
+        /* webpackChunkName: "create project" */ '../views/ProjectForm.vue'
       )
+  },
+  {
+    path: '/projects/edit/:editableProjectId',
+    name: 'projects.put',
+    component: () =>
+      import(/* webpackChunkName: "edit project" */ '../views/ProjectForm.vue'),
+    props: true
   },
   {
     path: '*',
