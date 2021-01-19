@@ -126,7 +126,7 @@ import PageWrapper from '@/components/page/PageWrapper.vue';
 import PageHeader from '@/components/page/PageHeader.vue';
 import PageContent from '@/components/page/PageContent.vue';
 import rules from '@/rules';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -143,7 +143,6 @@ export default {
   created() {
     if (this.editingProject) {
       const project = this.getProjectById(this.editableProjectId);
-      console.log(project);
       this.project = cloneDeep(project);
     }
   },
@@ -174,6 +173,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['createProject', 'editProject']),
     addParticipant(participant) {
       if (participant && this.participantDoesNotExists(participant)) {
         this.project.participants.push({ name: participant });
@@ -193,7 +193,12 @@ export default {
     },
     submit() {
       if (this.validateForm()) {
-        console.log(this.project);
+        if (this.editingProject) {
+          this.editProject(this.project);
+        } else {
+          this.createProject({ ...this.project, id: String(Math.random()) });
+        }
+        this.navigateToProjects();
       }
     },
     validateForm() {
