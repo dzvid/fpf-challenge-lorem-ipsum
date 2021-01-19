@@ -1,7 +1,9 @@
 <template>
   <PageWrapper>
     <PageHeader>
-      <template v-slot:title> Cadastrar novo projeto </template>
+      <template v-slot:title>
+        {{ editingProject ? 'Editar projeto' : 'Cadastrar novo projeto' }}
+      </template>
     </PageHeader>
     <PageContent>
       <v-container>
@@ -103,8 +105,11 @@
 
           <v-row>
             <v-col cols="12" class="mt-4 d-flex justify-center align-center">
-              <v-btn color="secondary" depressed small @click="submit">
-                Salvar novo projeto
+              <v-btn depressed small @click="navigateToProjects()" class="mr-2">
+                Cancelar
+              </v-btn>
+              <v-btn small color="secondary" depressed @click="submit">
+                Salvar projeto
               </v-btn>
             </v-col>
           </v-row>
@@ -115,16 +120,38 @@
 </template>
 
 <script>
+import cloneDeep from 'lodash.clonedeep';
+
 import PageWrapper from '@/components/page/PageWrapper.vue';
 import PageHeader from '@/components/page/PageHeader.vue';
 import PageContent from '@/components/page/PageContent.vue';
 import rules from '@/rules';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
     PageWrapper,
     PageHeader,
     PageContent
+  },
+  props: {
+    editableProjectId: {
+      type: String,
+      default: () => null
+    }
+  },
+  created() {
+    if (this.editingProject) {
+      const project = this.getProjectById(this.editableProjectId);
+      console.log(project);
+      this.project = cloneDeep(project);
+    }
+  },
+  computed: {
+    ...mapGetters(['getProjectById']),
+    editingProject() {
+      return this.editableProjectId;
+    }
   },
   data() {
     return {
@@ -153,6 +180,9 @@ export default {
         this.clearInputParticipant();
       }
     },
+    participantDoesNotExists(participant) {
+      return !this.project.participants.find((p) => p.name === participant);
+    },
     clearInputParticipant() {
       this.participant = null;
     },
@@ -161,9 +191,6 @@ export default {
         (p) => p.name !== name
       );
     },
-    participantDoesNotExists(participant) {
-      return !this.project.participants.find((p) => p.name === participant);
-    },
     submit() {
       if (this.validateForm()) {
         console.log(this.project);
@@ -171,9 +198,10 @@ export default {
     },
     validateForm() {
       return this.$refs.form.validate();
+    },
+    navigateToProjects() {
+      this.$router.push({ name: 'projects' });
     }
   }
 };
 </script>
-
-<style></style>

@@ -45,7 +45,7 @@
                   <v-flex xs12 md6 class="pa-2">
                     <div class="caption grey--text">Participantes</div>
                     <div
-                      v-for="person in parsedParticipants(project.participants)"
+                      v-for="person in project.participants"
                       :key="person.name"
                     >
                       <v-icon left> mdi-account-circle </v-icon>
@@ -64,7 +64,10 @@
                   align-center
                 >
                   <ButtonSimulateInvestment :onClick="() => {}" class="mr-2" />
-                  <ButtonEdit :onClick="() => {}" class="mr-2" />
+                  <ButtonEdit
+                    :onClick="() => navigateToEditProject(project.id)"
+                    class="mr-2"
+                  />
                   <ButtonDelete :onClick="() => {}" />
                 </v-layout>
               </v-expansion-panel-content>
@@ -77,6 +80,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 import PageWrapper from '@/components/page/PageWrapper.vue';
 import PageHeader from '@/components/page/PageHeader.vue';
 import PageContent from '@/components/page/PageContent.vue';
@@ -98,49 +103,29 @@ export default {
     ButtonEdit,
     ButtonDelete
   },
+  async created() {
+    await this.fetchProjects();
+  },
   data() {
     return {
-      projects: [
-        {
-          id: 'asdads',
-          name: 'Foo',
-          start_date: '12/01/2021',
-          end_date: '13/01/2021',
-          participants:
-            '[{"name":"Heloisa"}, {"name":"Clarisse"}, {"name":"Maria Eduarda"}]',
-          risk: 0,
-          value: 25000.5
-        },
-        {
-          id: 'asdads12',
-          name: 'Foo',
-          start_date: '12/01/2021',
-          end_date: '13/01/2021',
-          participants:
-            '[{"name":"Heloisa"}, {"name":"Clarisse"}, {"name":"Maria Eduarda"}]',
-          risk: 0,
-          value: 25000.5
-        },
-        {
-          id: 'asdads13',
-          name: 'Foo',
-          start_date: '12/01/2021',
-          end_date: '13/01/2021',
-          participants:
-            '[{"name":"Heloisa"}, {"name":"Clarisse"}, {"name":"Maria Eduarda"}]',
-          risk: 0,
-          value: 25000.5
-        }
-      ],
       riskLevels: { 0: 'Baixo', 1: 'Médio', 2: 'Alto' }
     };
   },
+  computed: {
+    ...mapState({
+      projects: (state) => state.projects
+    })
+  },
   methods: {
+    ...mapActions(['fetchProjects']),
     riskLabel(risk) {
       return this.riskLevels[risk];
     },
-    parsedParticipants(participants) {
-      return JSON.parse(participants);
+    navigateToEditProject(projectId) {
+      this.$router.push({
+        name: 'projects.put',
+        params: { editableProjectId: projectId }
+      });
     }
   }
 };
