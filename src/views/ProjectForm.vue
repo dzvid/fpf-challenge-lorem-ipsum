@@ -47,6 +47,7 @@
             <v-col cols="12" sm="4">
               <v-text-field
                 v-model="project.value"
+                type="number"
                 :rules="[rules.value.required]"
                 label="Valor do projeto"
                 prepend-icon="mdi-cash-usd"
@@ -140,7 +141,9 @@ export default {
       default: () => null
     }
   },
-  created() {
+  async created() {
+    await this.fetchProjects();
+
     if (this.editingProject) {
       const project = this.getProjectById(this.editableProjectId);
       this.project = cloneDeep(project);
@@ -161,7 +164,6 @@ export default {
         value: null,
         risk: null,
         participants: []
-        // [{ name: 'Foo' }, { name: 'Foo2' }]
       },
       participant: null,
       risks: [
@@ -173,7 +175,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['createProject', 'editProject']),
+    ...mapActions(['fetchProjects', 'createProject', 'editProject']),
     addParticipant(participant) {
       if (participant && this.participantDoesNotExists(participant)) {
         this.project.participants.push({ name: participant });
@@ -194,9 +196,9 @@ export default {
     submit() {
       if (this.validateForm()) {
         if (this.editingProject) {
-          this.editProject(this.project);
+          this.editProject({ ...this.project });
         } else {
-          this.createProject({ ...this.project, id: String(Math.random()) });
+          this.createProject({ ...this.project });
         }
         this.navigateToProjects();
       }

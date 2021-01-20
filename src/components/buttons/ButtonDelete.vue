@@ -19,12 +19,13 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: 'ButtonDelete',
   props: {
-    onClick: {
+    projectId: {
       required: true,
-      type: Function
+      type: String
     }
   },
   data() {
@@ -33,9 +34,10 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['deleteProject']),
     handleDelete() {
-      this.onClick();
-      this.dialog = false;
+      this.deleteProject({ id: this.projectId });
+      this.visible = false;
     }
   }
 };

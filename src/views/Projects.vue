@@ -70,9 +70,7 @@
                     :onClick="() => navigateToEditProject(project.id)"
                     class="mr-2"
                   />
-                  <ButtonDelete
-                    :onClick="() => deleteProjectById(project.id)"
-                  />
+                  <ButtonDelete :projectId="project.id" />
                 </v-layout>
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -121,7 +119,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['fetchProjects', 'deleteProjectById']),
+    ...mapActions(['fetchProjects']),
     riskLabel(risk) {
       return this.riskLevels[risk];
     },
