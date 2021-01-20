@@ -162,7 +162,6 @@ export default {
         value: null,
         risk: null,
         participants: []
-        // [{ name: 'Foo' }, { name: 'Foo2' }]
       },
       participant: null,
       risks: [
@@ -195,9 +194,9 @@ export default {
     submit() {
       if (this.validateForm()) {
         if (this.editingProject) {
-          this.editProject(this.project);
+          this.editProject({ ...this.project });
         } else {
-          this.createProject({ ...this.project, id: String(Math.random()) });
+          this.createProject({ ...this.project });
         }
         this.navigateToProjects();
       }
