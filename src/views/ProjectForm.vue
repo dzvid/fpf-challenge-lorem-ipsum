@@ -141,7 +141,9 @@ export default {
       default: () => null
     }
   },
-  created() {
+  async created() {
+    await this.fetchProjects();
+
     if (this.editingProject) {
       const project = this.getProjectById(this.editableProjectId);
       this.project = cloneDeep(project);
@@ -173,7 +175,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['createProject', 'editProject']),
+    ...mapActions(['fetchProjects', 'createProject', 'editProject']),
     addParticipant(participant) {
       if (participant && this.participantDoesNotExists(participant)) {
         this.project.participants.push({ name: participant });

@@ -24,19 +24,30 @@ export default new Vuex.Store({
     async createProject(context, payload) {
       db.collection('projects')
         .add(payload)
-        .then(() => console.log('Added: ', payload));
+        .then(() => {
+          console.log('Added: ', payload);
+          context.dispatch('fetchProjects');
+        });
+
+      context.dispatch('fetchProjects');
     },
     async editProject(context, payload) {
       db.collection('projects')
         .doc(payload.id)
         .update(payload)
-        .then(('Updated: ', payload));
+        .then(() => {
+          console.log('Updated: ', payload);
+          context.dispatch('fetchProjects');
+        });
     },
     async deleteProject(context, payload) {
       db.collection('projects')
         .doc(payload.id)
         .delete()
-        .then(('Deleted: ', payload));
+        .then(() => {
+          console.log('Deleted: ', payload);
+          context.dispatch('fetchProjects');
+        });
     }
   },
   getters: {
