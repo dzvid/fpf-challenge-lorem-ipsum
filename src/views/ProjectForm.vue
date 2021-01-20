@@ -57,7 +57,7 @@
               <v-text-field
                 v-model="project.value"
                 type="number"
-                :rules="[rules.value.required]"
+                :rules="[rules.value.required, rules.value.min]"
                 label="Valor do projeto"
                 prepend-icon="mdi-cash-usd"
                 prefix="R$"

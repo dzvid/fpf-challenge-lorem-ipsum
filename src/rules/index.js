@@ -26,7 +26,8 @@ const rules = {
     }
   },
   value: {
-    required
+    required,
+    min: (v) => (v && v > 0) || 'Valor deve ser maior que 0.'
   },
   participants: {
     atLeastOne: (array) =>

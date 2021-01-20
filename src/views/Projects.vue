@@ -15,7 +15,7 @@
         <v-container class="my-5">
           <v-expansion-panels>
             <v-expansion-panel v-for="project in projects" :key="project.id">
-              <v-expansion-panel-header class="headline">{{
+              <v-expansion-panel-header class="text-h6">{{
                 project.name
               }}</v-expansion-panel-header>
 
