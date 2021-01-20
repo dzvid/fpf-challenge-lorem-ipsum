@@ -7,7 +7,7 @@
     </PageHeader>
     <PageContent>
       <v-container>
-        <v-form ref="form">
+        <v-form id="form" ref="form">
           <v-row align-sm="center" justify-sm="center">
             <v-col cols="12" sm="8">
               <v-text-field
@@ -26,7 +26,11 @@
                 v-model="project.start_date"
                 label="Data de início"
                 hint="DD/MM/YYYY"
-                :rules="[rules.start_date.required]"
+                v-mask="'##/##/####'"
+                :rules="[
+                  rules.start_date.required,
+                  rules.start_date.isValidDate
+                ]"
                 prepend-icon="mdi-calendar-start"
                 required
               ></v-text-field>
@@ -36,7 +40,12 @@
                 v-model="project.end_date"
                 label="Data de término"
                 hint="DD/MM/YYYY"
-                :rules="[rules.end_date.required]"
+                v-mask="'##/##/####'"
+                :rules="[
+                  rules.end_date.required,
+                  rules.end_date.isValidDate,
+                  rules.end_date.isAfterStartDate(project.start_date)
+                ]"
                 prepend-icon="mdi-calendar-end"
                 required
               ></v-text-field>
@@ -106,7 +115,13 @@
 
           <v-row>
             <v-col cols="12" class="mt-4 d-flex justify-center align-center">
-              <v-btn depressed small @click="navigateToProjects()" class="mr-2">
+              <v-btn
+                text
+                depressed
+                small
+                @click="navigateToProjects()"
+                class="mr-2"
+              >
                 Cancelar
               </v-btn>
               <v-btn small color="secondary" depressed @click="submit">
