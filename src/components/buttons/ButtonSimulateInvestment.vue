@@ -11,18 +11,14 @@
         Realize aqui o cálculo de retorno de investimento do projeto.
       </v-card-subtitle>
       <v-card-text>
-        <v-form ref="form">
+        <v-form id="form" ref="form">
           <v-text-field
             v-model="investiment"
             type="number"
-            :rules="[
-              rules.value.required,
-              rules.value.validateInvestmentValue(project.value)
-            ]"
+            :rules="[rules.investment.validateInvestmentValue(project.value)]"
             label="Valor a investir"
             prepend-icon="mdi-cash-usd"
             prefix="R$"
-            required
           ></v-text-field>
         </v-form>
 
@@ -38,7 +34,14 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" text @click="visible = false"> Cancelar </v-btn>
-        <v-btn color="primary" text @click="handleSimulation"> Simular </v-btn>
+        <v-btn
+          color="primary"
+          form="form"
+          type="submit"
+          @click.prevent="handleSimulation"
+        >
+          Simular
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
