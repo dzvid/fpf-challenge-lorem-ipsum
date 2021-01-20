@@ -15,46 +15,73 @@
         <v-container class="my-5">
           <v-expansion-panels>
             <v-expansion-panel v-for="project in projects" :key="project.id">
-              <v-expansion-panel-header>{{
+              <v-expansion-panel-header class="headline">{{
                 project.name
               }}</v-expansion-panel-header>
 
               <v-expansion-panel-content>
-                <v-layout row wrap>
-                  <v-flex xs6 sm4 md6 class="pa-2">
-                    <div class="caption grey--text">Data de início</div>
-                    <div>{{ project.start_date }}</div>
-                  </v-flex>
+                <v-container>
+                  <v-row wrap align-sm="center" justify-sm="center">
+                    <v-col cols="12" sm="4">
+                      <v-text-field
+                        v-model="project.start_date"
+                        label="Data de início"
+                        prepend-icon="mdi-calendar-start"
+                        readonly
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="4">
+                      <v-text-field
+                        v-model="project.end_date"
+                        label="Data de término"
+                        prepend-icon="mdi-calendar-end"
+                        readonly
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
 
-                  <v-flex xs6 sm4 md6 class="pa-2">
-                    <div class="caption grey--text">Data de término</div>
-                    <div>
-                      {{ project.end_date }}
-                    </div>
-                  </v-flex>
+                  <v-row align-sm="center" justify-sm="center">
+                    <v-col cols="12" sm="4">
+                      <v-text-field
+                        v-model="project.value"
+                        type="number"
+                        label="Valor do projeto"
+                        prepend-icon="mdi-cash-usd"
+                        prefix="R$"
+                        required
+                        readonly
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="4">
+                      <v-text-field
+                        :value="riskLabel(project.risk)"
+                        prepend-icon="mdi-alert"
+                        label="Risco"
+                        required
+                        readonly
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
 
-                  <v-flex xs12 md6 class="pa-2">
-                    <div class="caption grey--text">Valor do projeto</div>
-                    <div>{{ project.value }}</div>
-                  </v-flex>
-                  <v-flex xs12 md6 class="pa-2">
-                    <div class="caption grey--text">Risco</div>
-                    <div>{{ riskLabel(project.risk) }}</div>
-                  </v-flex>
+                  <v-row class="mt-4" align-sm="center" justify-sm="center">
+                    <v-col cols="12" sm="8">
+                      <v-label> Participantes </v-label>
+                      <div>
+                        <v-chip
+                          v-for="person in project.participants"
+                          :key="person.name"
+                          class="ma-2"
+                        >
+                          <v-icon left> mdi-account </v-icon>
+                          <span class="text-truncate">
+                            {{ person.name }}
+                          </span>
+                        </v-chip>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </v-container>
 
-                  <v-flex xs12 md6 class="pa-2">
-                    <div class="caption grey--text">Participantes</div>
-                    <div
-                      v-for="person in project.participants"
-                      :key="person.name"
-                    >
-                      <v-icon left> mdi-account-circle </v-icon>
-                      <span>
-                        {{ person.name }}
-                      </span>
-                    </div>
-                  </v-flex>
-                </v-layout>
                 <v-layout
                   row
                   wrap
